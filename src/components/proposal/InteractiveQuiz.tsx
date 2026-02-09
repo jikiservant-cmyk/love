@@ -20,6 +20,11 @@ const questions = [
     question: "Which song reminds me of you the most?",
     options: ["Our wedding song (future)", "That indie track we found", "the song i sang u in the night", "All love songs"],
     answer: 2,
+  },
+  {
+    question: "Which was our best moment?",
+    options: ["kiss under the trees", "at the ka school", "at bahai temple", "our long walk"],
+    answer: 3,
   }
 ];
 
