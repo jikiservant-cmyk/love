@@ -1,9 +1,9 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Heart, Gift, Sparkles, Stars, Music } from "lucide-react";
+import { Heart, Gift, Sparkles, Stars, Music, Quote } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
 
 export function ProposalSection() {
   const [showModal, setShowModal] = useState(false);
@@ -20,9 +19,8 @@ export function ProposalSection() {
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
 
   const handleNoHover = () => {
-    // Playful "No" button that moves slightly when hovered
-    const randomX = Math.random() * 40 - 20;
-    const randomY = Math.random() * 40 - 20;
+    const randomX = Math.random() * 60 - 30;
+    const randomY = Math.random() * 60 - 30;
     setNoButtonPosition({ x: randomX, y: randomY });
     setIsHoveringNo(true);
   };
@@ -37,40 +35,37 @@ export function ProposalSection() {
       </div>
 
       <div className="max-w-4xl mx-auto text-center space-y-12 relative z-10">
-        <div className="relative inline-block">
-          <div className="absolute inset-0 bg-secondary/20 blur-3xl rounded-full scale-150 animate-pulse" />
-          <Heart className="w-24 h-24 text-secondary fill-current animate-float relative" />
-          <Sparkles className="absolute -top-4 -right-4 w-10 h-10 text-primary animate-pulse" />
-        </div>
-        
-        <h2 className="font-headline text-5xl sm:text-7xl font-black text-foreground tracking-tight">
-          My Heartfelt <span className="text-secondary italic">Message</span>
-        </h2>
-        
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-          <div className="relative p-10 sm:p-16 bg-white/60 backdrop-blur-xl rounded-[2.5rem] border border-white/40 shadow-2xl">
-            <p className="text-2xl sm:text-4xl font-body leading-relaxed text-foreground italic">
-              "Ashley, from the moment we met, my world changed color. Every laugh we've shared, 
-              every milestone we've hit, and every memory we've built has led me to this single moment. 
-              I don't just want you for today; I want you for every tomorrow that follows. 
-              I promise to stand by you and cherish every moment we share."
+        {!proposalAccepted ? (
+          <div className="space-y-12 animate-in fade-in duration-1000">
+            <div className="relative inline-block">
+              <div className="absolute inset-0 bg-secondary/20 blur-3xl rounded-full scale-150 animate-pulse" />
+              <Heart className="w-24 h-24 text-secondary fill-current animate-float relative" />
+              <Sparkles className="absolute -top-4 -right-4 w-10 h-10 text-primary animate-pulse" />
+            </div>
+            
+            <h2 className="font-headline text-5xl sm:text-7xl font-black text-foreground tracking-tight">
+              A Moment for <span className="text-secondary italic">Us</span>
+            </h2>
+            
+            <p className="text-2xl font-body text-muted-foreground italic max-w-2xl mx-auto">
+              "Every journey has a beginning, and every story has a chapter that changes everything. 
+              I have something I've been waiting to ask you..."
             </p>
-          </div>
-        </div>
 
-        <div className="pt-16">
-          {!proposalAccepted ? (
-            <Button 
-              onClick={() => setShowModal(true)}
-              className="group relative bg-secondary hover:bg-secondary/90 text-white px-16 py-10 rounded-full h-auto text-4xl font-headline font-bold shadow-[0_20px_50px_-10px_rgba(224,122,95,0.6)] transition-all hover:scale-110 active:scale-95 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-              <Gift className="mr-4 w-10 h-10 group-hover:rotate-12 transition-transform" />
-              I Have A Question For You...
-            </Button>
-          ) : (
-            <div className="animate-in zoom-in slide-in-from-bottom-10 duration-1000 space-y-8">
+            <div className="pt-12">
+              <Button 
+                onClick={() => setShowModal(true)}
+                className="group relative bg-secondary hover:bg-secondary/90 text-white px-16 py-10 rounded-full h-auto text-4xl font-headline font-bold shadow-[0_20px_50px_-10px_rgba(224,122,95,0.6)] transition-all hover:scale-110 active:scale-95 overflow-hidden"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <Gift className="mr-4 w-10 h-10 group-hover:rotate-12 transition-transform" />
+                Open My Heart
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-16 animate-in zoom-in slide-in-from-bottom-12 duration-1000">
+            <div className="space-y-6">
               <div className="flex justify-center gap-4">
                 <Stars className="w-12 h-12 text-secondary animate-spin-slow" />
                 <h3 className="text-7xl sm:text-8xl font-headline font-black text-secondary uppercase tracking-tighter drop-shadow-lg">
@@ -81,23 +76,35 @@ export function ProposalSection() {
               <p className="text-3xl text-muted-foreground font-body italic max-w-xl mx-auto">
                 "Together is a wonderful place to be. I'm the luckiest person in the world to call you mine."
               </p>
-              <div className="flex justify-center gap-4 pt-4">
-                 <Heart className="w-8 h-8 text-secondary fill-current animate-bounce" />
-                 <Heart className="w-12 h-12 text-secondary fill-current animate-bounce delay-100" />
-                 <Heart className="w-8 h-8 text-secondary fill-current animate-bounce delay-200" />
+            </div>
+
+            <div className="relative group max-w-3xl mx-auto">
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary via-secondary to-primary rounded-[2.5rem] blur opacity-25 animate-pulse"></div>
+              <div className="relative p-10 sm:p-16 bg-white/80 backdrop-blur-xl rounded-[2.5rem] border border-white/40 shadow-2xl">
+                <Quote className="w-12 h-12 text-primary/30 absolute top-8 right-8" />
+                <h4 className="font-headline text-3xl text-secondary mb-6 italic">My Heartfelt Message</h4>
+                <p className="text-2xl sm:text-4xl font-body leading-relaxed text-foreground italic">
+                  "Ashley, from the moment we met, my world changed color. Every laugh we've shared, 
+                  every milestone we've hit, and every memory we've built has led me to this single moment. 
+                  I don't just want you for today; I want you for every tomorrow that follows. 
+                  I promise to stand by you and cherish every moment we share."
+                </p>
+                <div className="flex justify-center gap-4 pt-10">
+                   <Heart className="w-8 h-8 text-secondary fill-current animate-bounce" />
+                   <Heart className="w-12 h-12 text-secondary fill-current animate-bounce delay-100" />
+                   <Heart className="w-8 h-8 text-secondary fill-current animate-bounce delay-200" />
+                </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent className="sm:max-w-[700px] border-none bg-transparent p-0 overflow-visible shadow-none">
           <div className="relative bg-white rounded-[3rem] overflow-hidden shadow-[0_30px_100px_-20px_rgba(0,0,0,0.3)] border-4 border-primary/20">
-            {/* Top accent bar */}
             <div className="h-4 bg-gradient-to-r from-primary via-secondary to-primary w-full" />
             
-            {/* Decorative icons inside modal */}
             <div className="absolute top-10 left-10 opacity-10">
               <Music className="w-20 h-20 text-secondary" />
             </div>
@@ -121,7 +128,7 @@ export function ProposalSection() {
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="flex flex-col sm:row gap-6 justify-center pt-10">
+              <div className="flex flex-col sm:flex-row gap-6 justify-center pt-10">
                 <Button 
                   onClick={() => {
                     setProposalAccepted(true);
@@ -129,7 +136,7 @@ export function ProposalSection() {
                   }}
                   className="bg-secondary text-white px-16 py-10 rounded-full text-3xl font-headline font-bold hover:bg-secondary/90 shadow-[0_15px_40px_-10px_rgba(224,122,95,0.5)] h-auto hover:scale-105 transition-all"
                 >
-                  Yes, A Million Times Yes!
+                  Yes, Forever Yes!
                 </Button>
                 
                 <div className="relative inline-block">
@@ -144,7 +151,7 @@ export function ProposalSection() {
                       alert("Nice try, but I know you mean YES! ❤️");
                     }}
                   >
-                    Let me think... (No)
+                    Not yet...
                   </Button>
                 </div>
               </div>
