@@ -29,7 +29,7 @@ export function ProposalSection() {
         
         <div className="relative p-8 sm:p-12 bg-white/40 backdrop-blur-lg rounded-[2rem] border-2 border-primary/30 shadow-2xl">
           <p className="text-2xl sm:text-3xl font-body leading-relaxed text-foreground italic">
-            "Sophia, from the moment we met, my world changed color. Every laugh we've shared, 
+            "Ashley, from the moment we met, my world changed color. Every laugh we've shared, 
             every milestone we've hit, and every memory we've built has led me to this single moment. 
             I don't just want you for today; I want you for every tomorrow that follows. 
             I promise to hold your hand through the storms and dance with you in the light."

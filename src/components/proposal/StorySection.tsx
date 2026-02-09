@@ -63,7 +63,7 @@ export function StorySection() {
                 <Input 
                   value={formData.girlfriendName} 
                   onChange={(e) => setFormData({...formData, girlfriendName: e.target.value})}
-                  placeholder="e.g. Sophia"
+                  placeholder="e.g. Ashley"
                   className="bg-white"
                 />
               </div>

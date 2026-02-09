@@ -28,7 +28,7 @@ export default function Home() {
         <div className="relative z-10 text-center text-white space-y-6 px-4 animate-in fade-in slide-in-from-bottom-12 duration-1000">
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-6 py-2 rounded-full border border-white/30 text-sm font-semibold uppercase tracking-widest animate-float">
             <Heart className="w-4 h-4 fill-current" />
-            My Dearest Sophia
+            My Dearest Ashley
             <Heart className="w-4 h-4 fill-current" />
           </div>
           <h1 className="text-6xl sm:text-8xl font-headline font-black drop-shadow-2xl">
