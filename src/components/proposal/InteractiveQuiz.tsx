@@ -1,24 +1,35 @@
+
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Heart } from "lucide-react";
+import { useFirestore, useAuth } from "@/firebase";
+import { collection, doc, serverTimestamp } from "firebase/firestore";
+import { addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
+import { signInAnonymously } from "firebase/auth";
+
+const QUIZ_ID = "ashley-proposal-quiz";
 
 const questions = [
   {
+    id: "q1",
     question: "Where was our very first date?",
     options: ["the holiday program room", "bahai temple", "basket ball court at MAK", "Under the city lights"],
   },
   {
+    id: "q2",
     question: "What is my favorite thing about us?",
     options: ["Our long walks", "How we finish each other's sentences", "Our late-night talks", "Everything about us"],
   },
   {
+    id: "q3",
     question: "Which song reminds me of you the most?",
     options: ["Our wedding song (future)", "That indie track we found", "the song i sang u in the night", "All love songs"],
   },
   {
+    id: "q4",
     question: "Which was our best moment?",
     options: ["kiss under the trees", "at the ka school", "at bahai temple", "our long walk"],
   }
@@ -27,8 +38,31 @@ const questions = [
 export function InteractiveQuiz() {
   const [currentStep, setCurrentStep] = useState(0);
   const [finished, setFinished] = useState(false);
+  const { firestore, auth } = useFirestore();
+  const [respondentName, setRespondentName] = useState("Ashley");
 
-  const handleAnswer = () => {
+  useEffect(() => {
+    // Ensure the respondent is at least anonymously authenticated to write to Firestore
+    if (auth && !auth.currentUser) {
+      signInAnonymously(auth);
+    }
+  }, [auth]);
+
+  const handleAnswer = (option: string) => {
+    if (firestore) {
+      const questionId = questions[currentStep].id;
+      const responseRef = collection(firestore, "quizzes", QUIZ_ID, "questions", questionId, "responses");
+      
+      addDocumentNonBlocking(responseRef, {
+        quizId: QUIZ_ID,
+        questionId: questionId,
+        questionText: questions[currentStep].question,
+        response: option,
+        respondentName: respondentName,
+        createdAt: serverTimestamp(),
+      });
+    }
+
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -60,7 +94,7 @@ export function InteractiveQuiz() {
                   key={idx}
                   variant="outline"
                   className="h-16 text-lg font-body hover:bg-primary/20 border-primary/30 rounded-2xl transition-all"
-                  onClick={handleAnswer}
+                  onClick={() => handleAnswer(option)}
                 >
                   {option}
                 </Button>

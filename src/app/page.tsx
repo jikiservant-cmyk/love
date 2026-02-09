@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect } from "react";
@@ -5,7 +6,8 @@ import { Countdown } from "@/components/proposal/Countdown";
 import { InteractiveQuiz } from "@/components/proposal/InteractiveQuiz";
 import { ProposalSection } from "@/components/proposal/ProposalSection";
 import { AccessGate } from "@/components/AccessGate";
-import { Heart, ScrollText, Sparkles } from "lucide-react";
+import { Heart, ScrollText, Sparkles, ClipboardList } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -13,7 +15,6 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
-    // Check if user was previously authorized in this session
     const auth = sessionStorage.getItem("isAuthorized");
     if (auth === "true") {
       setIsAuthorized(true);
@@ -35,7 +36,6 @@ export default function Home() {
     <main className="min-h-screen font-body selection:bg-primary/30 animate-in fade-in duration-1000">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/20 via-background to-secondary/20">
-        {/* Decorative background sparks */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <Sparkles className="absolute top-1/4 left-1/4 w-12 h-12 text-primary/30 animate-pulse" />
           <Heart className="absolute top-1/3 right-1/4 w-16 h-16 text-secondary/20 animate-float" />
@@ -72,13 +72,18 @@ export default function Home() {
       <ProposalSection />
 
       {/* Footer */}
-      <footer className="py-12 bg-white/50 backdrop-blur-sm text-center border-t border-primary/10">
+      <footer className="py-12 bg-white/50 backdrop-blur-sm text-center border-t border-primary/10 relative">
         <div className="flex items-center justify-center gap-2 text-secondary font-headline text-2xl mb-2">
           <Heart className="w-6 h-6 fill-current" />
           <span>Forever Yours</span>
           <Heart className="w-6 h-6 fill-current" />
         </div>
         <p className="text-muted-foreground text-sm uppercase tracking-widest">Happy Valentine's Day 2025</p>
+        
+        {/* Hidden link for Jacob to check results */}
+        <Link href="/results" className="absolute bottom-4 right-4 text-muted-foreground/20 hover:text-secondary transition-colors">
+          <ClipboardList className="w-4 h-4" />
+        </Link>
       </footer>
     </main>
   );
