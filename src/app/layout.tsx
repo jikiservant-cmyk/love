@@ -2,8 +2,8 @@ import type {Metadata} from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Heartfelt Proposal App',
-  description: 'A romantic journey leading to a lifetime together.',
+  title: 'The Ashley Collection | Fine Jewelry',
+  description: 'Explore the exclusive Ashley Collection. Handcrafted elegance for every occasion.',
 };
 
 export default function RootLayout({

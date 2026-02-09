@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { ShieldCheck, Diamond, Lock } from "lucide-react";
+import { Diamond, Lock } from "lucide-react";
 
 interface AccessGateProps {
   onVerify: () => void;
@@ -13,15 +13,15 @@ interface AccessGateProps {
 const questions = [
   {
     id: 1,
-    question: "For security, please confirm: Where was our very first date?",
-    answer: "the holiday program room",
-    hint: "Think back to where we first spent time alone..."
+    question: "Client Identification: Who is jacob'eve?",
+    answers: ["ashley", "najjuko", "me"],
+    hint: "Identify yourself to proceed."
   },
   {
     id: 2,
-    question: "Final verification: What is the one song i sang u in the night?",
-    answer: "the song i sang u in the night",
-    hint: "A melody just for us."
+    question: "Since you are jacob's eve, when is the serpent tempting u to eat the forbidden fruit?",
+    anyAnswer: true,
+    hint: "Answer carefully..."
   }
 ];
 
@@ -34,8 +34,19 @@ export function AccessGate({ onVerify }: AccessGateProps) {
     e.preventDefault();
     const currentQuestion = questions[step];
     
-    // Case-insensitive check and trimming whitespace
-    if (inputValue.toLowerCase().trim() === currentQuestion.answer.toLowerCase()) {
+    if (currentQuestion.anyAnswer) {
+      if (step < questions.length - 1) {
+        setStep(step + 1);
+        setInputValue("");
+        setError(false);
+      } else {
+        onVerify();
+      }
+      return;
+    }
+
+    const val = inputValue.toLowerCase().trim();
+    if (currentQuestion.answers?.some(a => a.toLowerCase() === val)) {
       if (step < questions.length - 1) {
         setStep(step + 1);
         setInputValue("");
@@ -77,13 +88,13 @@ export function AccessGate({ onVerify }: AccessGateProps) {
                   setInputValue(e.target.value);
                   setError(false);
                 }}
-                placeholder="Enter your answer..."
+                placeholder="Enter your response..."
                 className={`h-12 bg-white border-primary/20 focus:ring-secondary ${error ? 'border-destructive' : ''}`}
                 autoFocus
               />
               {error && (
                 <p className="text-destructive text-xs mt-1 text-left animate-bounce">
-                  Access Denied. Please check your credentials.
+                  Verification Failed. Please try again.
                 </p>
               )}
             </div>
