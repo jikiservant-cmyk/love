@@ -1,0 +1,178 @@
+{
+  "entities": {
+    "QuizResponse": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "QuizResponse",
+      "type": "object",
+      "description": "Stores the responses to the interactive quiz.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the QuizResponse entity."
+        },
+        "quizId": {
+          "type": "string",
+          "description": "Reference to the Quiz this response belongs to. (Relationship: Quiz 1:N QuizResponse)"
+        },
+        "respondentName": {
+          "type": "string",
+          "description": "The name of the person who answered the quiz"
+        },
+        "response": {
+          "type": "string",
+          "description": "The answer provided"
+        },
+        "questionId": {
+          "type": "string",
+          "description": "Reference to the Quiz question answered. (Relationship: QuizQuestion 1:N QuizResponse)"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of when the response was recorded.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "quizId",
+        "respondentName",
+        "response",
+        "questionId",
+        "createdAt"
+      ]
+    },
+    "Quiz": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Quiz",
+      "type": "object",
+      "description": "Stores the quiz id.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Quiz entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the quiz"
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the quiz"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of when the quiz was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "description",
+        "createdAt"
+      ]
+    },
+    "QuizQuestion": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "QuizQuestion",
+      "type": "object",
+      "description": "Stores the quiz question id.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the QuizQuestion entity."
+        },
+        "quizId": {
+          "type": "string",
+          "description": "Reference to the Quiz this question belongs to. (Relationship: Quiz 1:N QuizQuestion)"
+        },
+        "question": {
+          "type": "string",
+          "description": "The quiz question"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp of when the question was created.",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "quizId",
+        "question",
+        "createdAt"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/quizzes/{quizId}",
+        "definition": {
+          "entityName": "Quiz",
+          "schema": {
+            "$ref": "#/backend/entities/Quiz"
+          },
+          "description": "Stores quiz information. The quiz creator has full control over the quiz and its associated data.",
+          "params": [
+            {
+              "name": "quizId",
+              "description": "Unique identifier for the quiz."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/quizzes/{quizId}/questions/{questionId}",
+        "definition": {
+          "entityName": "QuizQuestion",
+          "schema": {
+            "$ref": "#/backend/entities/QuizQuestion"
+          },
+          "description": "Stores questions related to a specific quiz. Inherits access control from the parent quiz.",
+          "params": [
+            {
+              "name": "quizId",
+              "description": "Unique identifier for the quiz."
+            },
+            {
+              "name": "questionId",
+              "description": "Unique identifier for the quiz question."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/quizzes/{quizId}/questions/{questionId}/responses/{responseId}",
+        "definition": {
+          "entityName": "QuizResponse",
+          "schema": {
+            "$ref": "#/backend/entities/QuizResponse"
+          },
+          "description": "Stores responses to a specific quiz question. Inherits access control from the parent quiz and question. This implicitly grants the quiz creator access to all responses within their quiz, ensuring they can view all the answers. No denormalization is required because ownership is inherited through the hierarchical structure.",
+          "params": [
+            {
+              "name": "quizId",
+              "description": "Unique identifier for the quiz."
+            },
+            {
+              "name": "questionId",
+              "description": "Unique identifier for the quiz question."
+            },
+            {
+              "name": "responseId",
+              "description": "Unique identifier for the quiz response."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "To fulfill the user's requirement of accessing all quiz responses, and adhering to the core design principles, particularly Authorization Independence and QAPs (Rules are not Filters), the proposed Firestore structure focuses on segregating data based on ownership and providing a membership model where appropriate. Given the prompt, there is an implied requirement to allow the main user to see responses given to a Quiz, this will be achieved by placing QuizResponses within a collection owned by the quiz creator. \n\nQuizzes are stored under `/quizzes/{quizId}`. Quiz questions related to a quiz are stored in a subcollection: `/quizzes/{quizId}/questions/{questionId}`. The quiz creator has full control over their quizzes and the associated questions.\n\nQuiz responses for a specific quiz question will be stored within a subcollection: `/quizzes/{quizId}/questions/{questionId}/responses/{responseId}`. Because the responses are nested under the quiz question and quiz itself, the person that created the quiz will have access to read and write the responses. This approach allows the main user (the quiz creator) to view all responses to their quizzes without needing complex security rules or querying across different collections. The structure also supports list operations efficiently (QAPs) because the rules can simply check if the user has access to the quiz, and if so, they can list the associated questions and responses.\n\nThis structure promotes Authorization Independence by nesting the responses under the quiz. This makes authorization straightforward: the quiz creator implicitly has access to all responses under their quiz. This avoids the need for complex `get()` calls in the security rules to check ownership or membership."
+  }
+}

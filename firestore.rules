@@ -1,0 +1,113 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * FIRESTORE SECURITY RULES - PROTOTYPING MODE
+     * 
+     * Core Philosophy:
+     * This ruleset implements a hierarchical ownership model designed for a Quiz application. 
+     * Authorization is centered around the "Quiz Creator." Access to questions and responses 
+     * is derived from ownership of the parent Quiz document.
+     *
+     * Data Structure:
+     * - /quizzes/{quizId} (Top-level ownership)
+     * - /quizzes/{quizId}/questions/{questionId} (Sub-collection)
+     * - /quizzes/{quizId}/questions/{questionId}/responses/{responseId} (Nested sub-collection)
+     *
+     * Key Security Decisions:
+     * 1. Hierarchical Inheritance: Access to sub-collections (Questions/Responses) is 
+     *    validated by performing a `get()` on the parent Quiz document to verify the 
+     *    authenticated user is the owner.
+     * 2. Public Read for Quizzes: Quizzes and Questions are publicly readable to allow 
+     *    respondents to view the content they need to answer.
+     * 3. Private Responses: Responses are strictly restricted. Only the Quiz Creator 
+     *    can list or read responses, fulfilling the requirement "all the answers she 
+     *    puts there I can see them."
+     * 4. Anonymous Submission: Quiz responses can be created by any authenticated user 
+     *    (including anonymous auth) but cannot be modified or deleted by them once sent.
+     *
+     * Denormalization for Authorization:
+     * - This ruleset expects an `ownerId` field on the Quiz document.
+     * - Relational integrity is enforced by ensuring `quizId` in data matches the path.
+     */
+
+    // --- Helper Functions ---
+
+    /** @description Checks if the user is authenticated. */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /** @description Validates that the user's UID matches the provided userId. */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /** @description Checks if the user is the creator of a specific quiz. */
+    function isQuizCreator(quizId) {
+      return isSignedIn() && get(/databases/$(database)/documents/quizzes/$(quizId)).data.ownerId == request.auth.uid;
+    }
+
+    /** @description Combines ownership and existence checks for updates/deletes. */
+    function isExistingOwner(ownerId) {
+      return resource != null && isOwner(ownerId);
+    }
+
+    // --- Collection Rules ---
+
+    /**
+     * @description Rules for the Quiz collection.
+     * @path /quizzes/{quizId}
+     * @allow (get, list) if true (Quizzes are public for respondents).
+     * @allow (create) if authenticated and ownerId matches auth UID.
+     * @deny (update, delete) if the user is not the recorded ownerId.
+     * @principle Public consumption with strict owner-only modifications.
+     */
+    match /quizzes/{quizId} {
+      allow get, list: if true;
+
+      // CRITICAL: The 'Quiz' entity definition was missing an 'ownerId' field. 
+      // This rule assumes an 'ownerId' field exists for security.
+      allow create: if isSignedIn() && request.resource.data.ownerId == request.auth.uid;
+      
+      allow update: if isExistingOwner(resource.data.ownerId) 
+                    && request.resource.data.ownerId == resource.data.ownerId; // Immutable ownerId
+      
+      allow delete: if isExistingOwner(resource.data.ownerId);
+
+      /**
+       * @description Rules for QuizQuestions sub-collection.
+       * @path /quizzes/{quizId}/questions/{questionId}
+       * @allow (get, list) if true (Questions are public for respondents).
+       * @allow (create, update, delete) if the user owns the parent Quiz.
+       * @principle Inherited authorization from parent Quiz document.
+       */
+      match /questions/{questionId} {
+        allow get, list: if true;
+        allow create: if isQuizCreator(quizId);
+        allow update: if isQuizCreator(quizId) && resource != null;
+        allow delete: if isQuizCreator(quizId) && resource != null;
+
+        /**
+         * @description Rules for QuizResponses.
+         * @path /quizzes/{quizId}/questions/{questionId}/responses/{responseId}
+         * @allow (create) if authenticated (allows respondent to submit).
+         * @allow (get, list) if the user is the Quiz Creator.
+         * @deny (update, delete) Always (responses should be immutable for integrity).
+         * @principle Private list/read for creator; anonymous create for respondents.
+         */
+        match /responses/{responseId} {
+          // Allow any authenticated user (or anonymous) to submit a response
+          allow create: if isSignedIn() && request.resource.data.quizId == quizId;
+          
+          // Only the quiz creator can see the answers
+          allow get, list: if isQuizCreator(quizId);
+          
+          // Responses are typically immutable once submitted in this quiz context
+          allow update, delete: if false;
+        }
+      }
+    }
+  }
+}
