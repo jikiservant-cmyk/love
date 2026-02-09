@@ -8,7 +8,7 @@ import { Sparkles, Heart } from "lucide-react";
 const questions = [
   {
     question: "Where was our very first date?",
-    options: ["the holiday program room", "bahai temple", "The little Italian restaurant", "Under the city lights"],
+    options: ["the holiday program room", "bahai temple", "basket ball court at MAK", "Under the city lights"],
     answer: 0,
   },
   {
