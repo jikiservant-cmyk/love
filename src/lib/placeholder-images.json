@@ -1,34 +1,3 @@
 {
-  "placeholderImages": [
-    {
-      "id": "hero-romantic",
-      "description": "A couple watching a sunset together",
-      "imageUrl": "https://images.unsplash.com/photo-1664714844985-adb4fd6572ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxyb21hbnRpYyUyMHN1bnNldCUyMGNvdXBsZXxlbnwwfHx8fDE3NzA1ODE5MTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "romantic sunset couple"
-    },
-    {
-      "id": "first-date",
-      "description": "A cozy cafe setting",
-      "imageUrl": "https://images.unsplash.com/photo-1758372337257-f07b25c5b286?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y296eSUyMGNhZmUlMjBkYXRlfGVufDB8fHx8MTc3MDU4MTkwOXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "cozy cafe date"
-    },
-    {
-      "id": "vacation-memory",
-      "description": "Couple walking on a beach",
-      "imageUrl": "https://images.unsplash.com/photo-1623627072466-6dd81f187618?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxiZWFjaCUyMGNvdXBsZSUyMHdhbGtpbmd8ZW58MHx8fHwxNzcwNTgxOTA5fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "beach couple walking"
-    },
-    {
-      "id": "funny-moment",
-      "description": "Couple laughing together",
-      "imageUrl": "https://images.unsplash.com/photo-1619208110262-90c0438c174d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxjb3VwbGUlMjBsYXVnaGluZ3xlbnwwfHx8fDE3NzA0ODc1MzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "couple laughing"
-    },
-    {
-      "id": "proposal-backdrop",
-      "description": "Beautiful flower garden",
-      "imageUrl": "https://images.unsplash.com/photo-1596086221164-c8a4cac55e27?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxmbG93ZXIlMjBnYXJkZW58ZW58MHx8fHwxNzcwNTY1NzIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "flower garden"
-    }
-  ]
+  "placeholderImages": []
 }
