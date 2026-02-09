@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Heart } from "lucide-react";
 
 const questions = [
@@ -18,8 +18,8 @@ const questions = [
   },
   {
     question: "Which song reminds me of you the most?",
-    options: ["Our wedding song (future)", "That indie track we found", "The song from the radio that day", "All love songs"],
-    answer: 0,
+    options: ["Our wedding song (future)", "That indie track we found", "the song i sang u in the night", "All love songs"],
+    answer: 2,
   }
 ];
 
