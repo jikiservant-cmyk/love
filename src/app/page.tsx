@@ -1,11 +1,9 @@
-
 import Image from "next/image";
 import { Countdown } from "@/components/proposal/Countdown";
 import { PhotoGallery } from "@/components/proposal/PhotoGallery";
-import { StorySection } from "@/components/proposal/StorySection";
 import { InteractiveQuiz } from "@/components/proposal/InteractiveQuiz";
 import { ProposalSection } from "@/components/proposal/ProposalSection";
-import { Heart, Sparkles, ScrollText } from "lucide-react";
+import { Heart, ScrollText } from "lucide-react";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 
 export default function Home() {
@@ -50,11 +48,6 @@ export default function Home() {
 
       {/* Memory Lane / Photos */}
       <PhotoGallery />
-
-      {/* GenAI Story Section */}
-      <div className="bg-primary/5">
-        <StorySection />
-      </div>
 
       {/* Interactive Quiz */}
       <InteractiveQuiz />
