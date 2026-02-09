@@ -25,14 +25,14 @@ export function ProposalSection() {
           <Sparkles className="absolute -top-4 -right-4 w-8 h-8 text-primary animate-float" />
         </div>
         
-        <h2 className="font-headline text-5xl sm:text-6xl font-black text-foreground">My Heartfelt Vow</h2>
+        <h2 className="font-headline text-5xl sm:text-6xl font-black text-foreground">My Heartfelt Message</h2>
         
         <div className="relative p-8 sm:p-12 bg-white/40 backdrop-blur-lg rounded-[2rem] border-2 border-primary/30 shadow-2xl">
           <p className="text-2xl sm:text-3xl font-body leading-relaxed text-foreground italic">
             "Ashley, from the moment we met, my world changed color. Every laugh we've shared, 
             every milestone we've hit, and every memory we've built has led me to this single moment. 
             I don't just want you for today; I want you for every tomorrow that follows. 
-            I promise to hold your hand through the storms and dance with you in the light."
+            I promise to stand by you and cherish every moment we share."
           </p>
         </div>
 
@@ -47,7 +47,7 @@ export function ProposalSection() {
             </Button>
           ) : (
             <div className="animate-in zoom-in duration-1000 space-y-6">
-              <h3 className="text-6xl font-headline font-black text-secondary uppercase tracking-widest">Yes! Forever!</h3>
+              <h3 className="text-6xl font-headline font-black text-secondary uppercase tracking-widest">Yes! Official!</h3>
               <p className="text-2xl text-muted-foreground font-body italic">"Together is a wonderful place to be."</p>
             </div>
           )}
@@ -61,10 +61,10 @@ export function ProposalSection() {
             <Heart className="w-16 h-16 text-secondary fill-current mx-auto animate-bounce" />
             <DialogHeader>
               <DialogTitle className="text-4xl sm:text-5xl font-headline font-black text-foreground">
-                Will You Marry Me?
+                Will You Be My Girlfriend?
               </DialogTitle>
               <DialogDescription className="text-xl font-body mt-4 text-muted-foreground">
-                There's nobody else I'd rather spend my lifetime with.
+                I'd love to make our journey official.
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
@@ -81,7 +81,6 @@ export function ProposalSection() {
                 variant="outline" 
                 className="border-primary text-muted-foreground px-12 py-6 rounded-full text-xl font-headline hover:bg-primary/10 h-auto"
                 onClick={() => {
-                  // Playful 'no' logic: move the button or just a sweet nudge
                   alert("Nice try, but I know you mean YES! ❤️");
                 }}
               >

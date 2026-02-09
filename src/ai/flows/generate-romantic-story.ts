@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -48,7 +49,7 @@ const prompt = ai.definePrompt({
   The story should be unique, and the tone should be sincere and filled with love.
   Please use a narrative tone, as if addressing {{girlfriendName}} directly with the story.
   The story should have at least 500 words.
-  End the story on a poignant, reflective note suitable for a marriage proposal.
+  End the story on a poignant, reflective note suitable for asking her to be your girlfriend and making your relationship official.
   `,
 });
 
@@ -63,4 +64,3 @@ const generateRomanticStoryFlow = ai.defineFlow(
     return output!;
   }
 );
-
