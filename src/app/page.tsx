@@ -1,11 +1,38 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Countdown } from "@/components/proposal/Countdown";
 import { InteractiveQuiz } from "@/components/proposal/InteractiveQuiz";
 import { ProposalSection } from "@/components/proposal/ProposalSection";
+import { AccessGate } from "@/components/AccessGate";
 import { Heart, ScrollText, Sparkles } from "lucide-react";
 
 export default function Home() {
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+    // Check if user was previously authorized in this session
+    const auth = sessionStorage.getItem("isAuthorized");
+    if (auth === "true") {
+      setIsAuthorized(true);
+    }
+  }, []);
+
+  const handleVerify = () => {
+    setIsAuthorized(true);
+    sessionStorage.setItem("isAuthorized", "true");
+  };
+
+  if (!isMounted) return null;
+
+  if (!isAuthorized) {
+    return <AccessGate onVerify={handleVerify} />;
+  }
+
   return (
-    <main className="min-h-screen font-body selection:bg-primary/30">
+    <main className="min-h-screen font-body selection:bg-primary/30 animate-in fade-in duration-1000">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary/20 via-background to-secondary/20">
         {/* Decorative background sparks */}
