@@ -60,7 +60,7 @@ export function Countdown() {
     <div className="flex flex-col items-center gap-6 py-12">
       <div className="flex items-center gap-2 text-secondary animate-pulse">
         <Heart className="fill-current w-5 h-5" />
-        <span className="font-headline text-xl font-semibold uppercase tracking-widest text-center">A Millennium of Love</span>
+        <span className="font-headline text-xl font-semibold uppercase tracking-widest text-center">Countdown to Forever</span>
         <Heart className="fill-current w-5 h-5" />
       </div>
       
