@@ -1,432 +1,255 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  ArrowDown,
   ArrowRight,
   BookOpen,
-  CalendarDays,
-  CheckCircle2,
-  ChevronDown,
   GraduationCap,
-  HeartHandshake,
   Mail,
   MapPin,
   Menu,
+  Monitor,
   Phone,
+  Search,
   ShieldCheck,
   Utensils,
-  UsersRound,
+  Users,
   X,
 } from "lucide-react";
 
-type Slide = {
-  image: string;
-  eyebrow: string;
-  title: string;
-  accent: string;
-  description: string;
-};
-
-const slides: Slide[] = [
-  {
-    image: "/images/students-campus.webp",
-    eyebrow: "Welcome to Hana International School",
-    title: "A better education",
-    accent: "for a better world.",
-    description:
-      "An integrated school in Nsangi, Uganda, where academic excellence and personal growth go hand in hand.",
-  },
-  {
-    image: "/images/science-lab.png",
-    eyebrow: "Curiosity starts here",
-    title: "Think boldly.",
-    accent: "Learn by doing.",
-    description:
-      "We give every learner the confidence, guidance, and room to discover what they can become.",
-  },
-  {
-    image: "/images/graduation.jpg",
-    eyebrow: "Every learner. Every possibility.",
-    title: "A community",
-    accent: "made to flourish.",
-    description:
-      "A caring school community, dedicated teachers, and learning pathways designed for the future.",
-  },
+const heroImages = [
+  "/images/graduation.jpg",
+  "/images/prefect-speech.png",
+  "/images/students-campus.webp",
 ];
 
 const staff = [
   {
     name: "Mr. Agaba Redeemer",
-    title: "Director of Studies · UNEB",
+    role: "DOS - UNEB",
     image: "https://hanainternational.ac.ug/wp-content/uploads/2026/08/redimer-225x300.jpeg",
-    note: "Committed to academic excellence and meaningful student development.",
+    detail: "The Director of Studies office is committed to academic excellence and student development.",
   },
   {
     name: "Ms. Mildred Chekwech",
-    title: "Director of Studies · Cambridge",
+    role: "DOS - Cambridge",
     image: "https://hanainternational.ac.ug/wp-content/uploads/2026/05/mildren-225x300.jpg",
-    note: "Enriching every learner’s journey through guidance and high expectations.",
+    detail: "The Dean of Students’ office is dedicated to academic excellence and holistic development.",
   },
   {
     name: "Mr. Ssentongo Denis",
-    title: "Quality Assurance Officer",
+    role: "Quality Assurance Officer",
     image: "https://hanainternational.ac.ug/wp-content/uploads/2024/11/MR-SSENTONGO.jpeg",
-    note: "Helping our school community keep growing, learning, and improving.",
+    detail: "The Quality Assurance Office upholds high standards in student development and learning.",
   },
 ];
 
-const news = [
+const notices = [
   {
-    category: "School life",
     title: "Candidates’ Dedication 2024",
-    text: "Candidates in prayer, dedication in action — success is the goal.",
+    category: "Dedication",
     image: "/images/prefect-speech.png",
-    date: "November 2024",
+    copy: "Candidates in prayer, dedication in action — success is the goal.",
   },
   {
-    category: "Arts & culture",
-    title: "Music, Dance and Drama",
-    text: "Celebrating the talent, creativity, and vibrant culture of our learners.",
-    image: "https://hanainternational.ac.ug/wp-content/uploads/2026/02/MDD-2048x1366.jpg",
-    date: "2025",
+    title: "Candidates’ Prom Party 2025",
+    category: "Prom Party",
+    image: "https://hanainternational.ac.ug/wp-content/uploads/2026/02/prom-1536x2048.jpeg",
+    copy: "Where style meets celebration, and memories are made to last a lifetime!",
   },
   {
-    category: "Sport",
     title: "Sports Day Celebrations",
-    text: "Teamwork, discipline, and healthy competition — all part of growing up.",
+    category: "Sports",
     image: "https://hanainternational.ac.ug/wp-content/uploads/2026/04/20260406_094353-1463x2048.jpg",
-    date: "2026",
+    copy: "Teamwork, discipline, and healthy competition help our students grow.",
   },
 ];
 
-function Reveal({
-  children,
-  className = "",
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  delay?: number;
-}) {
-  const elementRef = useRef<HTMLDivElement>(null);
-  const [ready, setReady] = useState(false);
+function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
-    setReady(true);
-    const element = elementRef.current;
-    if (!element || !("IntersectionObserver" in window)) {
-      element?.classList.add("revealed");
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("revealed");
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.12 },
-    );
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
+    document.body.classList.toggle("mobile-menu-open", menuOpen);
+    return () => document.body.classList.remove("mobile-menu-open");
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <div
-      ref={elementRef}
-      className={`reveal-pending ${ready ? "reveal-ready" : ""} ${className}`}
-      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
-    >
-      {children}
-    </div>
+    <>
+      <div className="desktop-utility">
+        <div className="site-width utility-inner">
+          <div className="utility-links"><a href="#home">Home</a><a href="#staff">Staff</a><a href="#contact">Contact Us</a><a href="#about">About Hana</a></div>
+          <div className="utility-social"><a aria-label="Facebook" href="https://facebook.com" target="_blank" rel="noreferrer">f</a><a aria-label="X" href="https://x.com/HisuOfficial" target="_blank" rel="noreferrer">♥</a><a aria-label="Instagram" href="https://instagram.com/hanaintschooluganda" target="_blank" rel="noreferrer">◎</a></div>
+        </div>
+      </div>
+      <div className="desktop-brand"><div className="site-width desktop-brand-inner"><span>Hana International School Uganda</span><small>In God We Trust</small></div></div>
+      <header className="main-header">
+        <div className="mobile-header-inner">
+          <a className="mobile-wordmark" href="#home" aria-label="Home">HISU</a>
+          <button className="menu-toggle" type="button" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen}>
+            {menuOpen ? <X size={25} /> : <Menu size={29} />}
+          </button>
+        </div>
+        <nav className={`primary-nav ${menuOpen ? "primary-nav-open" : ""}`} aria-label="Main navigation">
+          <a href="#home" onClick={closeMenu}>Home</a>
+          <a href="#about" onClick={closeMenu}>About Hana</a>
+          <a href="#admissions" onClick={closeMenu}>Admission</a>
+          <a href="#mission" onClick={closeMenu}>Curriculum</a>
+          <a href="#life" onClick={closeMenu}>School</a>
+          <a href="#contact" onClick={closeMenu}>Contact Us</a>
+        </nav>
+      </header>
+    </>
   );
 }
 
-function Wordmark() {
-  return (
-    <a className="wordmark" href="#home" aria-label="Hana International School Uganda home">
-      <span className="wordmark-name">Hana International</span>
-      <span className="wordmark-sub">School <i /> Uganda</span>
-    </a>
-  );
-}
-
-export default function Home() {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [newsOpen, setNewsOpen] = useState(false);
+function Hero({ onCambridgeClick }: { onCambridgeClick: () => void }) {
+  const [imageIndex, setImageIndex] = useState(0);
 
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
-    }, 6500);
+    const timer = window.setInterval(() => setImageIndex((index) => (index + 1) % heroImages.length), 7000);
     return () => window.clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    document.body.classList.toggle("modal-open", newsOpen);
-    return () => document.body.classList.remove("modal-open");
-  }, [newsOpen]);
-
-  const slide = slides[activeSlide];
-  const closeMenu = () => setMobileMenuOpen(false);
-
   return (
-    <main id="home" className="school-site">
-      <div className="topline">
-        <div className="site-container topline-inner">
-          <div className="topline-location"><MapPin size={13} /> Kampala – Masaka Rd, Nsangi Town</div>
-          <div className="topline-contact">
-            <a href="tel:+256759766060"><Phone size={12} /> +256 759 766 060</a>
-            <span className="topline-separator" />
-            <a href="mailto:hanainternationalschool2023@gmail.com"><Mail size={13} /> Email us</a>
-          </div>
+    <section className="hero" id="home" aria-label="Welcome to Hana International School Uganda">
+      {heroImages.map((image, index) => (
+        <div key={image} className={`hero-image ${index === imageIndex ? "hero-image-active" : ""}`} style={{ backgroundImage: `url("${image}")` }} aria-hidden="true" />
+      ))}
+      <div className="hero-tint" />
+      <div className="hero-content">
+        <h1>A BETTER<br />EDUCATION<br className="mobile-break" /> FOR A BETTER WORLD</h1>
+        <p className="hero-description">An integrated school in Nsangi, Uganda, focused on academic excellence and personal growth. HISU offers a nurturing environment with dedicated teachers and support staff. Our commitment ensures each student’s well-being and development in all aspects</p>
+        <p className="hero-codes"><span>CENTRE NO. <b><u>U4146</u></b></span><span>SELECTION CODE: <b><u>2661</u></b></span></p>
+        <div className="hero-actions" id="admissions">
+          <a href="https://hanainternational.ac.ug/admissions/join-uneb/" target="_blank" rel="noreferrer" className="join-button"><GraduationCap aria-hidden="true" /><span>JOIN UNEB</span></a>
+          <button className="join-button" onClick={onCambridgeClick}><GraduationCap aria-hidden="true" /><span>JOIN CAMBRIDGE</span></button>
         </div>
       </div>
+      <div className="hero-dots" aria-label="Choose background image">
+        {heroImages.map((image, index) => <button key={image} onClick={() => setImageIndex(index)} className={index === imageIndex ? "active" : ""} aria-label={`Show school photo ${index + 1}`} />)}
+      </div>
+    </section>
+  );
+}
 
-      <header className="site-header">
-        <div className="site-container header-inner">
-          <Wordmark />
-          <button
-            className="menu-toggle"
-            onClick={() => setMobileMenuOpen((open) => !open)}
-            aria-expanded={mobileMenuOpen}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {mobileMenuOpen ? <X size={23} /> : <Menu size={23} />}
-          </button>
-          <nav className={`main-nav ${mobileMenuOpen ? "nav-open" : ""}`} aria-label="Main navigation">
-            <a className="nav-link nav-current" href="#home" onClick={closeMenu}>Home</a>
-            <a className="nav-link" href="#about" onClick={closeMenu}>About us</a>
-            <a className="nav-link" href="#programmes" onClick={closeMenu}>Academics <ChevronDown size={14} /></a>
-            <a className="nav-link" href="#admissions" onClick={closeMenu}>Admissions <ChevronDown size={14} /></a>
-            <a className="nav-link" href="#life" onClick={closeMenu}>Student life</a>
-            <a className="nav-link" href="#contact" onClick={closeMenu}>Contact</a>
-            <a className="nav-apply" href="#admissions" onClick={closeMenu}>Apply now <ArrowRight size={15} /></a>
-          </nav>
+function StatCard() {
+  return (
+    <section className="stats-section" aria-labelledby="stats-title">
+      <div className="site-width">
+        <h2 id="stats-title" className="section-title stats-title">We Are HISU</h2>
+        <div className="stats-card">
+          <div className="stat"><span className="stat-label">Years of Experience</span><strong>23</strong></div>
+          <div className="stat"><span className="stat-label">Happy Learners</span><strong>730</strong></div>
+          <div className="stat"><span className="stat-label">Experienced Staff Members</span><strong>111</strong></div>
         </div>
-      </header>
+      </div>
+    </section>
+  );
+}
 
-      <section className="hero" aria-label="Welcome">
-        {slides.map((item, index) => (
-          <div
-            key={item.image}
-            className={`hero-photo ${activeSlide === index ? "hero-photo-active" : ""}`}
-            style={{ backgroundImage: `url("${item.image}")` }}
-            aria-hidden="true"
-          />
-        ))}
-        <div className="hero-shade" />
-        <div className="site-container hero-content-wrap">
-          <div className="hero-content" key={slide.title}>
-            <div className="hero-eyebrow"><span className="eyebrow-line" />{slide.eyebrow}</div>
-            <h1>{slide.title}<br /><em>{slide.accent}</em></h1>
-            <p>{slide.description}</p>
-            <div className="hero-actions">
-              <a className="button button-green" href="#admissions">Discover our school <ArrowRight size={17} /></a>
-              <a className="button button-outline-light" href="#about"><span className="play-icon">▶</span> Learn about us</a>
-            </div>
-            <div className="hero-register"><span className="register-mark"><CheckCircle2 size={15} /></span> Centre No. <b>U4146</b><span className="register-divider" /> Selection Code: <b>2661</b></div>
-          </div>
-          <div className="hero-side-note"><span>01 — 03</span><i /> LEARN WITH PURPOSE</div>
-          <div className="hero-controls" aria-label="Hero slides">
-            <button className="hero-scroll" onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })} aria-label="Scroll to about us"><ArrowDown size={18} /></button>
-            <div className="hero-dots">
-              {slides.map((item, index) => (
-                <button
-                  key={item.eyebrow}
-                  className={`hero-dot ${activeSlide === index ? "dot-active" : ""}`}
-                  onClick={() => setActiveSlide(index)}
-                  aria-label={`Show slide ${index + 1}`}
-                  aria-current={activeSlide === index}
-                />
-              ))}
-            </div>
-            <span className="hero-counter">0{activeSlide + 1}<i />0{slides.length}</span>
-          </div>
-        </div>
-        <div className="hero-ticker"><span>NSANGI · UGANDA</span><i /> Growing minds. Building tomorrow.</div>
-      </section>
+function PurposeSection() {
+  return (
+    <section id="mission" className="purpose-section" aria-label="Our mission, motto and vision">
+      <article className="purpose-item">
+        <div className="purpose-copy"><h2>OUR MISSION</h2><p>Hana International School Uganda – Nsangi is dedicated to enhancing the educational experience of young adolescents by providing vision, knowledge, and resources to all students, fostering the development of productive and ethical citizens.</p></div>
+        <BookOpen className="purpose-icon" strokeWidth={2.5} aria-hidden="true" />
+      </article>
+      <article className="purpose-item">
+        <Search className="purpose-icon" strokeWidth={2.5} aria-hidden="true" />
+        <div className="purpose-copy"><h2>OUR MOTTO</h2><p>In God We Trust</p></div>
+      </article>
+      <article className="purpose-item purpose-last">
+        <div className="purpose-copy"><h2>OUR VISION</h2><p>To provide the best quality education that ensures satisfaction of our customers and other stake holders.</p></div>
+        <Monitor className="purpose-icon" strokeWidth={2.5} aria-hidden="true" />
+      </article>
+    </section>
+  );
+}
 
-      <section id="admissions" className="pathways" aria-label="Admission pathways">
-        <div className="pathway-intro">
-          <span className="mini-label">Find your path</span>
-          <p>One community.<br /><b>Two great pathways.</b></p>
-        </div>
-        <a className="pathway-card pathway-uneb" href="https://hanainternational.ac.ug/admissions/join-uneb/" target="_blank" rel="noreferrer">
-          <span className="pathway-icon"><BookOpen size={22} /></span>
-          <span className="pathway-copy"><small>National curriculum</small><strong>Join UNEB</strong></span>
-          <span className="pathway-arrow"><ArrowRight size={18} /></span>
-        </a>
-        <a className="pathway-card pathway-cambridge" href="https://hanainternational.ac.ug/join-cambridge/" target="_blank" rel="noreferrer">
-          <span className="pathway-icon"><GraduationCap size={24} /></span>
-          <span className="pathway-copy"><small>International curriculum</small><strong>Join Cambridge</strong></span>
-          <span className="pathway-arrow"><ArrowRight size={18} /></span>
-        </a>
-        <button className="day-section-callout" onClick={() => setNewsOpen(true)}>
-          <span className="callout-dot" /><span><b>Now enrolling</b><small>Cambridge Day Section</small></span><ArrowRight size={15} />
-        </button>
-      </section>
+function Home() {
+  const [announcementOpen, setAnnouncementOpen] = useState(false);
 
-      <section className="stats-band">
-        <div className="site-container stats-grid">
-          <div className="stats-intro"><span className="mini-label mini-label-light">A place to belong</span><h2>We are HISU</h2></div>
-          <div className="stat-item"><strong>2</strong><span>Learning pathways</span></div>
-          <div className="stat-item"><strong>360<span>°</span></strong><span>Whole-child growth</span></div>
-          <div className="stat-item"><strong>1</strong><span>Welcoming community</span></div>
-          <div className="stats-tail"><HeartHandshake size={35} strokeWidth={1.35} /></div>
+  useEffect(() => {
+    document.body.classList.toggle("modal-open", announcementOpen);
+    return () => document.body.classList.remove("modal-open");
+  }, [announcementOpen]);
+
+  return (
+    <main className="school-site">
+      <Header />
+      <Hero onCambridgeClick={() => setAnnouncementOpen(true)} />
+      <StatCard />
+
+      <section className="welcome-section" id="about">
+        <div className="site-width welcome-inner">
+          <h2 className="welcome-title"><span className="welcome-to">Welcome to</span><span className="welcome-school">Hana International School,<br className="welcome-break" /> Uganda</span></h2>
+          <p className="welcome-copy">Hana International School Uganda (HISU) is an integrated school in Nsangi, Uganda, focused on academic excellence and personal growth. Just 30 minutes from Kampala, HISU offers a nurturing environment with dedicated teachers and support staff. Our commitment ensures each student’s well-being and development in all aspects</p>
+          <img className="welcome-photo" src="/images/students-campus.webp" alt="Students at Hana International School Uganda" />
         </div>
       </section>
 
-      <section id="about" className="welcome-section section-pad">
-        <div className="site-container welcome-grid">
-          <Reveal className="welcome-visual">
-            <div className="welcome-image-main"><img src="/images/graduation.jpg" alt="A Hana International School learner taking part in a graduation celebration" /></div>
-            <div className="welcome-image-small"><img src="/images/prefect-speech.png" alt="A student speaking at a school event" /></div>
-            <div className="welcome-note"><span>LEARNER FIRST</span><b>Growing minds,<br />building tomorrow.</b></div>
-            <div className="welcome-caption"><span>01</span> LEARN · LEAD · FLOURISH</div>
-          </Reveal>
-          <Reveal className="welcome-copy" delay={120}>
-            <div className="section-kicker"><span /> Welcome to HISU</div>
-            <h2>A school where<br /><em>every learner</em><br />can flourish.</h2>
-            <p className="welcome-lead">Hana International School Uganda is an integrated school in Nsangi, focused on academic excellence and personal growth.</p>
-            <p className="welcome-body">Just 30 minutes from Kampala, our nurturing environment brings together dedicated teachers, supportive staff, and curious learners. We believe every child deserves the encouragement and opportunity to discover their strengths and shape a bright future.</p>
-            <a className="text-link" href="#mission">Discover our story <span><ArrowRight size={16} /></span></a>
-            <div className="welcome-signoff"><span className="signoff-rule" /><span>Learning with purpose, every day.</span></div>
-          </Reveal>
-        </div>
-      </section>
+      <PurposeSection />
 
-      <section id="mission" className="purpose-section">
-        <div className="purpose-leaf purpose-leaf-one" />
-        <div className="site-container purpose-grid">
-          <Reveal className="purpose-intro">
-            <div className="section-kicker section-kicker-light"><span /> What guides us</div>
-            <h2>Education with<br /><em>heart &amp; purpose.</em></h2>
-            <p>We help young people grow into thoughtful, capable, and compassionate citizens of the world.</p>
-            <a className="button button-outline-light purpose-link" href="#programmes">Explore our approach <ArrowRight size={16} /></a>
-          </Reveal>
-          <Reveal className="purpose-cards" delay={130}>
-            <article className="purpose-card">
-              <span className="purpose-icon"><span>M</span></span><small>01 / WHY WE ARE HERE</small><h3>Our Mission</h3>
-              <p>To enhance the educational experience of young adolescents with the vision, knowledge, and resources to become productive and ethical citizens.</p>
-            </article>
-            <article className="purpose-card">
-              <span className="purpose-icon"><span>V</span></span><small>02 / WHERE WE ARE GOING</small><h3>Our Vision</h3>
-              <p>To provide the best quality education, creating lasting satisfaction for our learners, families, and wider community.</p>
-            </article>
-            <article className="purpose-card purpose-motto">
-              <span className="purpose-icon"><span>✳</span></span><small>03 / THE WORDS WE LIVE BY</small><h3>Our Motto</h3>
-              <p>In God We Trust</p>
-            </article>
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="programmes" className="offer-section section-pad">
-        <div className="site-container">
-          <Reveal className="section-heading-row">
-            <div><div className="section-kicker"><span /> The HISU difference</div><h2>Room to learn.<br /><em>Support to thrive.</em></h2></div>
-            <p>From the classroom to the playing field, we make sure every child has what they need to feel safe, supported, and ready to grow.</p>
-          </Reveal>
-          <div className="offer-grid">
-            {[
-              { icon: ShieldCheck, title: "Safety & security", text: "A secure campus and attentive staff help every learner feel protected, settled, and ready to focus." },
-              { icon: UsersRound, title: "A caring community", text: "Our teachers and support teams know that encouragement and belonging are essential to success." },
-              { icon: BookOpen, title: "Learning that inspires", text: "Thoughtful teaching and hands-on discovery give students the confidence to ask questions and go further." },
-              { icon: Utensils, title: "Healthy, balanced meals", text: "Nutritious meals help learners stay energised, focused, and ready for everything the day brings." },
-            ].map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <Reveal key={item.title} delay={index * 90}>
-                  <article className="offer-card"><div className="offer-card-top"><span className="offer-icon"><Icon size={24} strokeWidth={1.6} /></span><span className="offer-number">0{index + 1}</span></div><h3>{item.title}</h3><p>{item.text}</p><a href="#contact" aria-label={`Learn more about ${item.title}`}><ArrowRight size={17} /></a></article>
-                </Reveal>
-              );
-            })}
+      <section className="principal-message">
+        <div className="site-width">
+          <h2 className="section-title">Message from the Principal - UNEB</h2>
+          <div className="principal-layout">
+            <img src="https://hanainternational.ac.ug/wp-content/uploads/2024/11/HM-1.jpg" alt="Kimera Abdul Karim, Head Teacher" loading="lazy" onError={(event) => { event.currentTarget.src = "/images/prefect-speech.png"; }} />
+            <div className="principal-copy"><p>Dear Parents,</p><p>On behalf of the staff at Hana International School, I am happy to welcome you to the 2026 school year! Our mission is to provide each child with the highest quality education possible so that each student will graduate with the skills needed to contribute and thrive in a changing world.</p><p>We look forward to a productive partnership with you to ensure our children can achieve their highest potential. Every child is valued and cared for at Hana International School.</p><p><b>Kimera Abdul Karim, Head Teacher.</b></p></div>
           </div>
         </div>
       </section>
 
-      <section className="principal-section">
-        <div className="site-container principal-grid">
-          <Reveal className="principal-image">
-            <img src="/images/students-campus.webp" alt="Hana International School learners" />
-            <div className="principal-image-tag">A community that cares</div>
-          </Reveal>
-          <Reveal className="principal-quote" delay={130}>
-            <div className="section-kicker"><span /> A message from our school</div>
-            <div className="quote-mark">“</div>
-            <blockquote>Every child is valued and cared for here. Together, we give our learners the confidence to face challenges and the skills to thrive in a changing world.</blockquote>
-            <p>We look forward to a strong partnership with every family, built on shared care, trust, and a belief in each child’s potential.</p>
-            <div className="principal-name"><span className="principal-line" /><div><b>Kimera Abdul Karim</b><small>Head Teacher · UNEB</small></div></div>
-          </Reveal>
-        </div>
-      </section>
-
-      <section id="life" className="team-section section-pad">
-        <div className="site-container">
-          <Reveal className="team-heading">
-            <div><div className="section-kicker"><span /> The people behind the progress</div><h2>Meet our <em>team.</em></h2></div>
-            <p>Every learner’s success is a team effort. Meet some of the people who help make it happen.</p>
-          </Reveal>
-          <div className="team-grid">
-            {staff.map((person, index) => (
-              <Reveal key={person.name} delay={index * 100}>
-                <article className="team-card">
-                  <div className="team-photo"><img src={person.image} alt={person.name} loading="lazy" onError={(event) => { event.currentTarget.src = "/images/prefect-speech.png"; }} /><span className="team-index">0{index + 1}</span></div>
-                  <div className="team-card-content"><small>{person.title}</small><h3>{person.name}</h3><p>{person.note}</p><a href="#contact" aria-label={`Contact about ${person.name}`}><ArrowRight size={16} /></a></div>
-                </article>
-              </Reveal>
-            ))}
+      <section className="principal-message cambridge-message">
+        <div className="site-width">
+          <h2 className="section-title">Message from the Principal - Cambridge</h2>
+          <div className="principal-layout reverse-principal">
+            <img src="https://hanainternational.ac.ug/wp-content/uploads/2026/02/Abigail-e1771505320348.jpeg" alt="Ms. Atwemereireho Abigail, Head of School" loading="lazy" onError={(event) => { event.currentTarget.src = "/images/students-campus.webp"; }} />
+            <div className="principal-copy"><p>Dear Parents,</p><p>We are looking forward to a productive partnership with you to ensure our children can achieve their highest potential. Together, we share the responsibility for our children’s success and will do our very best to support them.</p><p><b>Ms. Atwemereireho Abigail, Head of School.</b></p></div>
           </div>
         </div>
       </section>
 
-      <section className="admissions-band">
-        <div className="site-container admissions-inner">
-          <div className="admissions-icon"><GraduationCap size={34} strokeWidth={1.4} /></div>
-          <div className="admissions-copy"><span>Take the next step</span><h2>Give your child a place to grow.</h2><p>Find the right pathway for your family and start a conversation with our admissions team.</p></div>
-          <div className="admissions-actions"><a className="button button-white" href="https://hanainternational.ac.ug/admissions/" target="_blank" rel="noreferrer">Explore admissions <ArrowRight size={16} /></a><a className="admissions-phone" href="tel:+256759766060"><Phone size={15} /> Talk to admissions</a></div>
-        </div>
+      <section className="best-child-section" id="life">
+        <div className="best-child-image" />
+        <div className="best-child-text"><h2>We Are The Best For Your Child</h2><p>Choose Hana International School Uganda for a balanced education that nurtures academic excellence and personal growth. With dedicated staff and a supportive environment, we prepare students for a bright future.</p><a href="https://hanainternational.ac.ug/admissions/" target="_blank" rel="noreferrer" className="apply-button">APPLY NOW <ArrowRight size={18} /></a></div>
       </section>
 
-      <section className="news-section section-pad">
-        <div className="site-container">
-          <Reveal className="team-heading news-heading">
-            <div><div className="section-kicker"><span /> From our school community</div><h2>News &amp; <em>notices.</em></h2></div>
-            <a className="text-link" href="https://hanainternational.ac.ug/students-life/" target="_blank" rel="noreferrer">Explore student life <span><ArrowRight size={16} /></span></a>
-          </Reveal>
-          <div className="news-grid">
-            {news.map((item, index) => (
-              <Reveal key={item.title} delay={index * 90}>
-                <article className="news-card">
-                  <a className="news-image" href="https://hanainternational.ac.ug/students-life/" target="_blank" rel="noreferrer"><img src={item.image} alt={item.title} loading="lazy" onError={(event) => { event.currentTarget.src = "/images/students-campus.webp"; }} /><span className="news-image-arrow"><ArrowRight size={18} /></span></a>
-                  <div className="news-content"><div className="news-meta"><span>{item.category}</span><time>{item.date}</time></div><h3>{item.title}</h3><p>{item.text}</p><a className="news-read" href="https://hanainternational.ac.ug/students-life/" target="_blank" rel="noreferrer">Read story <ArrowRight size={15} /></a></div>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
+      <section className="offers-section">
+        <div className="site-width"><h2 className="section-title">What We Offer For Your Child</h2><div className="offers-grid">
+          <article><ShieldCheck /><h3>Safety and Security</h3><p>HISU is equipped with secure facilities, round-the-clock trained staff, and surveillance systems, ensuring a safe environment where students feel protected at all times.</p></article>
+          <article><BookOpen /><h3>Conducive Environment</h3><p>Our well-maintained campus offers an ideal atmosphere for both learning and relaxation, helping students feel comfortable and focused.</p></article>
+          <article><Users /><h3>Experienced and Supportive Staff</h3><p>Our dedicated teachers and dorm staff are committed to fostering both academic success and personal growth.</p></article>
+          <article><Utensils /><h3>Nutritious Meals</h3><p>We provide a variety of healthy, balanced meals to support students’ growth, energy, and concentration.</p></article>
+        </div></div>
       </section>
 
-      <footer id="contact" className="site-footer">
-        <div className="site-container footer-main">
-          <div className="footer-brand"><Wordmark /><p>An integrated school in Nsangi, Uganda — nurturing confident learners and a brighter future.</p><a className="footer-map" href="https://maps.google.com/?q=Hana+International+School+Uganda" target="_blank" rel="noreferrer"><MapPin size={16} /> Kampala – Masaka Rd, Nsangi Town</a></div>
-          <div className="footer-col"><h3>Explore</h3><a href="#about">About us</a><a href="#programmes">Academics</a><a href="#admissions">Admissions</a><a href="#life">Student life</a></div>
-          <div className="footer-col"><h3>Learning pathways</h3><a href="https://hanainternational.ac.ug/admissions/join-uneb/" target="_blank" rel="noreferrer">UNEB Section</a><a href="https://hanainternational.ac.ug/join-cambridge/" target="_blank" rel="noreferrer">Cambridge Section</a><a href="#admissions">Day section</a><a href="#contact">How to apply</a></div>
-          <div className="footer-col footer-contact"><h3>Get in touch</h3><a href="tel:+256759766060"><Phone size={14} /> +256 759 766 060</a><a href="tel:+256772987550"><Phone size={14} /> +256 772 987 550</a><a href="mailto:hanainternationalschool2023@gmail.com"><Mail size={14} /> Email the school</a><span className="footer-open"><CalendarDays size={14} /> Admissions open for 2026</span></div>
+      <section className="team-section" id="staff">
+        <div className="site-width"><h2 className="section-title">Message from the Senior Management Team</h2><div className="team-grid">
+          {staff.map((person) => <article className="team-card" key={person.name}><img src={person.image} alt={person.name} loading="lazy" onError={(event) => { event.currentTarget.src = "/images/prefect-speech.png"; }} /><div><h3>{person.name}</h3><h4>{person.role}</h4><p>{person.detail}</p><a href="#contact">Read More</a></div></article>)}
+        </div></div>
+      </section>
+
+      <section className="notices-section">
+        <div className="site-width"><h2 className="section-title">NEWS &amp; NOTICES</h2><div className="notices-grid">
+          {notices.map((notice) => <article className="notice-card" key={notice.title}><img src={notice.image} alt={notice.title} loading="lazy" onError={(event) => { event.currentTarget.src = "/images/students-campus.webp"; }} /><div><h3>{notice.title}</h3><h4>{notice.category}</h4><p>{notice.copy}</p><a href="https://hanainternational.ac.ug/students-life/" target="_blank" rel="noreferrer">Read More <ArrowRight size={15} /></a></div></article>)}
+        </div></div>
+      </section>
+
+      <footer className="site-footer" id="contact">
+        <div className="site-width footer-grid">
+          <div className="footer-intro"><h2>Welcome to Hana International School, Uganda</h2><p>An integrated school in Nsangi, Uganda, focused on academic excellence and personal growth.</p></div>
+          <div><h3>Our Contacts</h3><p>Hana International School Uganda</p><p><MapPin size={15} /> Kampala – Masaka Rd, Nsangi Town</p><a href="tel:+256759766060"><Phone size={15} /> UNEB: 0759766060 | 0772987550</a><a href="tel:+256790010667"><Phone size={15} /> Cambridge: 0790010667 | 0758461002</a><a href="mailto:hanainternationalschool2023@gmail.com"><Mail size={15} /> hanainternationalschool2023@gmail.com</a></div>
+          <div><h3>Important Links</h3><a href="#home">Home</a><a href="#about">About Us</a><a href="#admissions">Admissions</a><a href="#contact">Contact Us</a><a href="https://hanainternational.ac.ug/admissions/join-uneb/" target="_blank" rel="noreferrer">UNEB Section</a><a href="https://hanainternational.ac.ug/join-cambridge/" target="_blank" rel="noreferrer">Cambridge Section</a></div>
         </div>
-        <div className="site-container footer-bottom"><span>© 2026 Hana International School Uganda</span><span>In God We Trust <i /> Nsangi, Uganda</span><a href="#home">Back to top ↑</a></div>
+        <div className="footer-bottom"><span>Copyright © 2026 Hana International School Uganda</span><span>In God We Trust</span></div>
       </footer>
 
-      {newsOpen && (
-        <div className="modal-scrim" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setNewsOpen(false); }}>
-          <section className="announcement-modal" role="dialog" aria-modal="true" aria-labelledby="announcement-title">
-            <button className="modal-close" aria-label="Close announcement" onClick={() => setNewsOpen(false)}><X size={20} /></button>
-            <div className="modal-art"><img src="/images/graduation.jpg" alt="A learner celebrating a school graduation" /><span>CAMBRIDGE · 2026</span></div>
-            <div className="modal-content"><div className="section-kicker"><span /> A new way to learn</div><h2 id="announcement-title">Cambridge now has a <em>day section.</em></h2><p>Your child can enjoy a world-class Cambridge education during the day and be home with family every evening.</p><a className="button button-green" href="https://hanainternational.ac.ug/cambridge/" target="_blank" rel="noreferrer" onClick={() => setNewsOpen(false)}>Explore Cambridge <ArrowRight size={16} /></a><button className="modal-dismiss" onClick={() => setNewsOpen(false)}>Maybe later</button></div>
-          </section>
-        </div>
-      )}
+      {announcementOpen && <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setAnnouncementOpen(false); }}><div className="announcement-dialog" role="dialog" aria-modal="true" aria-labelledby="cambridge-title"><button className="dialog-close" onClick={() => setAnnouncementOpen(false)} aria-label="Close"><X size={20} /></button><h2 id="cambridge-title">Big News! Cambridge Now Has a Day Section!</h2><p>Your child can now enjoy Cambridge’s world-class education during the day and be home with family every evening.</p><a href="https://hanainternational.ac.ug/cambridge/" target="_blank" rel="noreferrer" className="apply-button">Enroll Now <ArrowRight size={16} /></a><button className="dialog-dismiss" onClick={() => setAnnouncementOpen(false)}>No thanks, Maybe Later!</button></div></div>}
     </main>
   );
 }
+
+export default Home;
