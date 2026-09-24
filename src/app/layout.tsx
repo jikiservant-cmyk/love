@@ -4,8 +4,8 @@ import './globals.css';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'Hana International School Uganda | Learn, Lead, Flourish',
-  description: 'An integrated school in Nsangi, Uganda, focused on academic excellence, personal growth, and a caring community.',
+  title: 'Kazo Junior School Nursery and Primary | Kampala, Uganda',
+  description: 'A private, co-educational day and boarding nursery and primary school in Kazo, Kawempe Division, Kampala, following the UNEB curriculum.'
 };
 
 export default function RootLayout({
