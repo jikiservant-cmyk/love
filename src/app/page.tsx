@@ -183,7 +183,7 @@ function Home() {
       <section className="welcome-section" id="about">
         <div className="site-width welcome-inner">
           <h2 className="welcome-title"><span className="welcome-to">Welcome to</span><span className="welcome-school">Kazo Junior School<br className="welcome-break" /> Nursery and Primary</span></h2>
-          <p className="welcome-copy">Kazo Junior School Nursery and Primary is a private, mixed elementary school located on Lugoba Road in Kazo, Kawempe Division, Kampala. The school offers day and boarding programs from Early Childhood Development (Nursery) to Primary Seven (P.1–P.7). Kazo is in the Kazo–Lugoba suburban zone along the Kampala and Wakiso districts.</p>
+          <p className="welcome-copy">Kazo Junior School Nursery and Primary is a private, mixed elementary school located on Lugoba Road in Kazo, Kawempe Division, Kampala. The school offers day and boarding programs from Early Childhood Development (Nursery) to Primary Seven (P.1–P.7). The school is situated in the Kazo–Lugoba suburban corridor bordering Kampala and Wakiso districts.</p>
           <img className="welcome-photo" src="/images/kazo-pupils.jpg" alt="Illustrative photograph of primary school pupils in Uganda" />
         </div>
       </section>
