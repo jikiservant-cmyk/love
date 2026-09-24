@@ -4,8 +4,8 @@ import './globals.css';
 import { FirebaseClientProvider } from '@/firebase/client-provider';
 
 export const metadata: Metadata = {
-  title: 'The Ashley Collection | Fine Jewelry',
-  description: 'Explore the exclusive Ashley Collection. Handcrafted elegance for every occasion.',
+  title: 'Hana International School Uganda | Learn, Lead, Flourish',
+  description: 'An integrated school in Nsangi, Uganda, focused on academic excellence, personal growth, and a caring community.',
 };
 
 export default function RootLayout({
@@ -18,9 +18,8 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased bg-background text-foreground">
+      <body className="antialiased">
         <FirebaseClientProvider>
           {children}
         </FirebaseClientProvider>
